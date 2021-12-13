@@ -9,14 +9,16 @@ public class PlayerMovement : MonoBehaviour
     private float JumpForce = 3.5f;
     private float HorizontalInput;
     private Vector3 JumpVector;
+    public Collider2D Ground;
 
-    private bool OnGround = true;
+    private bool IsGrounded = true;
 
     // Start is called before the first frame update
     void Start()
     {
         Player = GetComponent<Rigidbody2D>();
         JumpVector = new Vector3(0.0f, 2.0f, 0.0f);
+
     }
 
     // Update is called once per frame
@@ -25,12 +27,13 @@ public class PlayerMovement : MonoBehaviour
         HorizontalInput = Input.GetAxisRaw("Horizontal");
         Player.velocity = new Vector2(HorizontalInput * Speed, Player.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.W) && OnGround == true || Input.GetKeyDown(KeyCode.UpArrow) && OnGround == true)
-        {
-            Player.AddForce(JumpVector * JumpForce, ForceMode2D.Impulse);
-        }
-
         //add direction checks once we have an actual sprite
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D Ground)
+    {
+        Player.AddForce(JumpVector * JumpForce, ForceMode2D.Impulse);
 
     }
 }
