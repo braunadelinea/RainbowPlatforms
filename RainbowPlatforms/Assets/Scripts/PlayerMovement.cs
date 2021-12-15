@@ -11,8 +11,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 JumpVector;
     public Collider2D Ground;
 
-    private bool IsGrounded = true;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,4 +34,5 @@ public class PlayerMovement : MonoBehaviour
         Player.AddForce(JumpVector * JumpForce, ForceMode2D.Impulse);
 
     }
+    
 }
