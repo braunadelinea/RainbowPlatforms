@@ -11,12 +11,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 JumpVector;
     public Collider2D Ground;
 
+    public bool IsFalling = true;
+
     // Start is called before the first frame update
     void Start()
     {
         Player = GetComponent<Rigidbody2D>();
         JumpVector = new Vector3(0.0f, 2.0f, 0.0f);
-
     }
 
     // Update is called once per frame
@@ -27,12 +28,21 @@ public class PlayerMovement : MonoBehaviour
 
         //add direction checks once we have an actual sprite
 
+        if(IsFalling == false && gameObject.GetComponent<Rigidbody2D>().velocity.y < 0)
+        {
+            print("falling");
+            IsFalling = true;
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D Ground)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        Player.AddForce(JumpVector * JumpForce, ForceMode2D.Impulse);
-
+        if (IsFalling)
+        {
+            print("jump");
+            Player.AddForce(JumpVector * JumpForce, ForceMode2D.Impulse);
+            IsFalling = false;
+        }
     }
     
 }
